@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
+import * as tc from '@actions/tool-cache'
 
 /**
  * The main function for the action.
@@ -7,18 +7,26 @@ import { wait } from './wait'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    const name: string = core.getInput('name')
+    const url: string = core.getInput('tarball-url')
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    core.debug(`Starting setup of ${name}  ...`)
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    // fetch tarball
+    core.debug(`Downloading ${name} from ${url} ...`)
+    const pathToTarball = await tc.downloadTool(url)
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    // extract tarball
+    core.debug(`Extracting ${name} ...`)
+    const pathToExtracted = await tc.extractTar(pathToTarball)
+
+    // add binary to path
+    core.debug(`Adding ${name} to path ...`)
+    core.addPath(pathToExtracted)
+
+    // Set output of tool path
+    core.debug(`Setting output 'tool-path' to ${pathToExtracted} ...`)
+    core.setOutput('tool-path', pathToExtracted)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
