@@ -1,7 +1,7 @@
 # Setup Tool Action
 
-> [!NOTE] This action is geared for setting up simple CLI tools from a tarball
-> URL.
+> [!NOTE]
+> This action is geared toward setting up simple CLI tools from a tarball URL.
 
 A GitHub Action to setup _any_ tool.
 
@@ -13,11 +13,10 @@ A GitHub Action to setup _any_ tool.
     # Description: The name of the tool to setup.
     # Required: false
     # Default: 'tool'
-    name:
-      'tool-name'
+    name: 'tool-name'
 
-      # Description: The tarball URL to download the tool.
-      # Required: true
+    # Description: The tarball URL to download the tool.
+    # Required: true
     tarball-url: 'https://example.com/tool.tar.gz'
 ```
 
