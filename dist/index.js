@@ -28814,7 +28814,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = run;
 const core = __importStar(__nccwpck_require__(2186));
 const tc = __importStar(__nccwpck_require__(7784));
-// import { wait } from './wait'
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -28822,10 +28821,8 @@ const tc = __importStar(__nccwpck_require__(7784));
 async function run() {
     try {
         const name = core.getInput('name');
-        const url = core.getInput('url');
-        // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
+        const url = core.getInput('tarball-url');
         core.debug(`Starting setup of ${name}  ...`);
-        // await wait(parseInt(ms, 10))
         // fetch tarball
         core.debug(`Downloading ${name} from ${url} ...`);
         const pathToTarball = await tc.downloadTool(url);

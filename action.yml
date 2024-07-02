@@ -8,11 +8,12 @@ branding:
 
 inputs:
   tarball-url:
-    description: 'The tarball URL to download the tool from.'
+    description: 'The tarball URL to download.'
     required: true
   name:
-    description: 'The name of the tool binary.'
-    required: true
+    description: 'The name of the tool.'
+    required: false
+    default: 'tool'
 
 outputs:
   tool-path:

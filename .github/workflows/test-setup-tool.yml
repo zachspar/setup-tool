@@ -1,0 +1,19 @@
+---
+name: Test Setup Tool
+on: workflow_dispatch
+jobs:
+  setup-yq:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup yq
+        uses: ./
+        with:
+          tarball-url: 'https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64.tar.gz'
+          name: 'yq'
+
+      - name: Verify yq
+        run: |
+          yq --version
